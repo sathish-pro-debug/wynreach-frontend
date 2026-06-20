@@ -1,0 +1,495 @@
+// // // SettingsPage.jsx
+// // import React, { useState } from 'react';
+// // import SenderIdentityTab from './components/SenderIdentityTab';
+// // import TeamMembersTab from './components/TeamMembersTab';
+// // import NotificationsTab from './components/NotificationsTab';
+// // import IntegrationsTab from './components/IntegrationsTab';
+// // import BillingTab from './components/BillingTab';
+
+// // // ===================== Simple Icons (SVG) =====================
+// // const MailIcon = () => (
+// //   <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+// //     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+// //   </svg>
+// // );
+
+// // const UsersIcon = () => (
+// //   <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+// //     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+// //   </svg>
+// // );
+
+// // const BellIcon = () => (
+// //   <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+// //     <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+// //   </svg>
+// // );
+
+// // const LinkIcon = () => (
+// //   <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+// //     <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+// //   </svg>
+// // );
+
+// // const CreditCardIcon = () => (
+// //   <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+// //     <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H5a3 3 0 00-3 3v8a3 3 0 003 3z" />
+// //   </svg>
+// // );
+
+// // // ===================== UI Components =====================
+// // const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+// // const PageHeader = ({ title, description }) => (
+// //   <div className="mb-6">
+// //     <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
+// //     {description && <p className="text-sm text-slate-500 mt-1">{description}</p>}
+// //   </div>
+// // );
+
+// // // Simplified permission guard – always renders children (no actual RBAC)
+// // const RequirePermission = ({ children }) => <>{children}</>;
+
+// // // ===================== Tabs Configuration =====================
+// // const TABS = [
+// //   { id: 'sender', label: 'Sender Identity', icon: MailIcon, permission: 'settings:sender' },
+// //   { id: 'team', label: 'Team Members', icon: UsersIcon, permission: 'settings:team' },
+// //   { id: 'notifications', label: 'Notifications', icon: BellIcon, permission: null },
+// //   { id: 'integrations', label: 'Integrations', icon: LinkIcon, permission: 'settings:integrations' },
+// //   { id: 'billing', label: 'Billing & Usage', icon: CreditCardIcon, permission: 'settings:billing' },
+// // ];
+
+// // // ===================== Main SettingsPage Component =====================
+// // export default function SettingsPage() {
+// //   const [activeTab, setActiveTab] = useState('sender');
+
+// //   const renderTab = () => {
+// //     switch (activeTab) {
+// //       case 'sender': return <SenderIdentityTab />;
+// //       case 'team': return (
+// //         <RequirePermission>
+// //           <TeamMembersTab />
+// //         </RequirePermission>
+// //       );
+// //       case 'notifications': return <NotificationsTab />;
+// //       case 'integrations': return (
+// //         <RequirePermission>
+// //           <IntegrationsTab />
+// //         </RequirePermission>
+// //       );
+// //       case 'billing': return (
+// //         <RequirePermission>
+// //           <BillingTab />
+// //         </RequirePermission>
+// //       );
+// //       default: return <SenderIdentityTab />;
+// //     }
+// //   };
+
+// //   return (
+// //     <div className="p-4 md:p-6">
+// //       <PageHeader title="Settings" description="Manage workspace configuration, team, and integrations" />
+
+// //       <div className="flex flex-col lg:flex-row gap-6">
+// //         {/* Tab navigation */}
+// //         <div className="w-full lg:w-52 shrink-0">
+// //           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+// //             {TABS.map((tab) => {
+// //               const Icon = tab.icon;
+// //               return (
+// //                 <button
+// //                   key={tab.id}
+// //                   onClick={() => setActiveTab(tab.id)}
+// //                   className={cn(
+// //                     'w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium transition-colors border-l-2',
+// //                     'border-b border-slate-100 last:border-b-0',
+// //                     activeTab === tab.id
+// //                       ? 'border-l-indigo-500 bg-indigo-50 text-indigo-700 font-semibold'
+// //                       : 'border-l-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-800'
+// //                   )}
+// //                 >
+// //                   <Icon />
+// //                   {tab.label}
+// //                 </button>
+// //               );
+// //             })}
+// //           </div>
+// //         </div>
+
+// //         {/* Tab content */}
+// //         <div className="flex-1 min-w-0">
+// //           {renderTab()}
+// //         </div>
+// //       </div>
+// //     </div>
+// //   );
+// // }
+
+// // SettingsPage.jsx – Main Settings Container with Tab Navigation
+// import React, { useState, useEffect } from 'react';
+// import SenderIdentityTab from './components/SenderIdentityTab';
+// import TeamMembersTab from './components/TeamMembersTab';
+// import NotificationsTab from './components/NotificationsTab';
+// import IntegrationsTab from './components/IntegrationsTab';
+// import BillingTab from './components/BillingTab';
+
+// // ===================== Icons =====================
+// const MailIcon = () => (
+//   <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+//   </svg>
+// );
+
+// const UsersIcon = () => (
+//   <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+//   </svg>
+// );
+
+// const BellIcon = () => (
+//   <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//     <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+//   </svg>
+// );
+
+// const LinkIcon = () => (
+//   <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//     <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+//   </svg>
+// );
+
+// const CreditCardIcon = () => (
+//   <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//     <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H5a3 3 0 00-3 3v8a3 3 0 003 3z" />
+//   </svg>
+// );
+
+// const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+// export default function SettingsPage() {
+//   const [activeTab, setActiveTab] = useState('sender');
+
+//   useEffect(() => {
+//     console.log(`[SettingsPage] Active tab changed to: ${activeTab}`);
+//   }, [activeTab]);
+
+//   const tabs = [
+//     { id: 'sender', label: 'Sender Identity', icon: MailIcon, description: 'Email & WhatsApp setup' },
+//     { id: 'team', label: 'Team Members', icon: UsersIcon, description: 'Manage your team' },
+//     { id: 'notifications', label: 'Notifications', icon: BellIcon, description: 'Alert preferences' },
+//     { id: 'integrations', label: 'Integrations', icon: LinkIcon, description: 'API & Webhooks' },
+//     { id: 'billing', label: 'Billing & Usage', icon: CreditCardIcon, description: 'Plan & invoices' },
+//   ];
+
+//   const renderContent = () => {
+//     switch (activeTab) {
+//       case 'sender': return <SenderIdentityTab />;
+//       case 'team': return <TeamMembersTab />;
+//       case 'notifications': return <NotificationsTab />;
+//       case 'integrations': return <IntegrationsTab />;
+//       case 'billing': return <BillingTab />;
+//       default: return <SenderIdentityTab />;
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
+//       <div className="max-w-[1400px] mx-auto">
+//         {/* Header */}
+//         <div className="mb-6">
+//           <h1 className="text-2xl font-bold text-slate-900">Settings</h1>
+//           <p className="text-sm text-slate-500 mt-1">
+//             Manage workspace configuration, team, and integrations
+//           </p>
+//         </div>
+
+//         <div className="flex flex-col lg:flex-row gap-6">
+//           {/* Sidebar */}
+//           <div className="w-full lg:w-64 shrink-0">
+//             <div className="bg-white rounded-xl border border-slate-200 overflow-hidden sticky top-6">
+//               {tabs.map((tab) => {
+//                 const Icon = tab.icon;
+//                 const isActive = activeTab === tab.id;
+//                 return (
+//                   <button
+//                     key={tab.id}
+//                     onClick={() => {
+//                       console.log(`[SettingsPage] Navigating to: ${tab.label}`);
+//                       setActiveTab(tab.id);
+//                     }}
+//                     className={cn(
+//                       "w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 border-l-2",
+//                       "border-b border-slate-100 last:border-b-0",
+//                       isActive
+//                         ? "border-l-indigo-500 bg-indigo-50/50 text-indigo-700"
+//                         : "border-l-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-800"
+//                     )}
+//                   >
+//                     <div className={cn(
+//                       "p-1.5 rounded-lg transition-colors",
+//                       isActive ? "bg-indigo-100 text-indigo-600" : "text-slate-400"
+//                     )}>
+//                       <Icon />
+//                     </div>
+//                     <div className="flex-1">
+//                       <p className={cn("text-sm font-medium", isActive ? "text-indigo-700" : "text-slate-700")}>
+//                         {tab.label}
+//                       </p>
+//                       <p className="text-xs text-slate-400 mt-0.5">{tab.description}</p>
+//                     </div>
+//                   </button>
+//                 );
+//               })}
+//             </div>
+//           </div>
+
+//           {/* Content */}
+//           <div className="flex-1 min-w-0">
+//             {renderContent()}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// import React, { useState } from 'react';
+// // Assuming these are imported correctly from your project structure
+// import SenderIdentityTab from './components/SenderIdentityTab';
+// import TeamMembersTab from './components/TeamMembersTab';
+// import NotificationsTab from './components/NotificationsTab';
+// import IntegrationsTab from './components/IntegrationsTab';
+// import BillingTab from './components/BillingTab';
+// import ProfileTab from './components/ProfileTab';
+
+
+// const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+// // Updated icons to match the image's colorful/emoji style
+// const ProfileIcon = () => <span className="text-lg">👤</span>;
+// const SenderIcon = () => <span className="text-lg">📧</span>;
+// const TeamIcon = () => <span className="text-lg">👥</span>;
+// const NotificationIcon = () => <span className="text-lg">🔔</span>;
+// const IntegrationIcon = () => <span className="text-lg">🔗</span>;
+// const BillingIcon = () => <span className="text-lg">💳</span>;
+
+// export default function SettingsPage() {
+//   const [activeTab, setActiveTab] = useState('profile');
+
+//   const tabs = [
+//     { id: 'profile', label: 'Profile', icon: ProfileIcon },
+//     { id: 'sender', label: 'Sender Identity', icon: SenderIcon },
+//     { id: 'team', label: 'Team Members', icon: TeamIcon }, // ← FIXED: added properly
+//     { id: 'notifications', label: 'Notifications', icon: NotificationIcon },
+//     { id: 'integrations', label: 'Integrations', icon: IntegrationIcon },
+//     { id: 'billing', label: 'Billing & Usage', icon: BillingIcon },
+//   ];
+
+//   const renderContent = () => {
+//     switch (activeTab) {
+//       case 'profile':
+//         return <ProfileTab />;
+//       case 'sender':
+//         return <SenderIdentityTab />;
+//       case 'team':
+//         return <TeamMembersTab />;
+//       case 'notifications':
+//         return <NotificationsTab />;
+//       case 'integrations':
+//         return <IntegrationsTab />;
+//       case 'billing':
+//         return <BillingTab />;
+//       default:
+//         return <ProfileTab />;
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-[#F8FAFC] px-2 pt-1 pb-4">
+//       <div className="max-w-[1200px] mx-auto">
+//         {/* Header Section */}
+//         <div className="mb-6">
+//           <h1 className="text-2xl font-bold text-[#0F172A] tracking-tight font-['Plus_Jakarta_Sans']">
+//             Settings
+//           </h1>
+//           <p className="text-sm text-[#64748B] mt-1">
+//             Manage your profile, workspace configuration, sender identities, team, and integrations
+//           </p>
+//         </div>
+
+//         <div className="flex flex-col lg:flex-row gap-6">
+//           {/* Sidebar Navigation */}
+//           <div className="w-full lg:w-[240px] shrink-0">
+//             <div className="bg-white rounded-xl border border-[#E2E8F0] overflow-hidden">
+//               {tabs.map((tab) => {
+//                 const Icon = tab.icon;
+//                 const isActive = activeTab === tab.id;
+//                 return (
+//                   <button
+//                     key={tab.id}
+//                     onClick={() => setActiveTab(tab.id)}
+//                     className={cn(
+//                       "w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-150",
+//                       "border-b border-[#F1F5F9] last:border-b-0",
+//                       isActive
+//                         ? "bg-[#EEF2FF] text-[#4F46E5] border-l-4 border-l-[#4F46E5]"
+//                         : "text-[#475569] hover:bg-slate-50 border-l-4 border-l-transparent"
+//                     )}
+//                   >
+//                     <div className="flex shrink-0 items-center justify-center w-5">
+//                       <Icon />
+//                     </div>
+//                     <span className={cn(
+//                       "text-sm font-medium",
+//                       isActive ? "text-[#4F46E5]" : "text-[#475569]"
+//                     )}>
+//                       {tab.label}
+//                     </span>
+//                   </button>
+//                 );
+//               })}
+//             </div>
+//           </div>
+
+//           {/* Content Area */}
+//           <div className="flex-1 min-w-0">
+//             {renderContent()}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ added for back arrow
+import SenderIdentityTab from './components/SenderIdentityTab';
+import TeamMembersTab from './components/TeamMembersTab';
+import NotificationsTab from './components/NotificationsTab';
+import IntegrationsTab from './components/IntegrationsTab';
+// BillingTab removed
+import ProfileTab from './components/ProfileTab';
+
+const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+// Icons with emoji style
+const ProfileIcon = () => <span className="text-lg">👤</span>;
+const SenderIcon = () => <span className="text-lg">📧</span>;
+const TeamIcon = () => <span className="text-lg">👥</span>;
+const NotificationIcon = () => <span className="text-lg">🔔</span>;
+const IntegrationIcon = () => <span className="text-lg">🔗</span>;
+// BillingIcon removed
+
+export default function SettingsPage() {
+  const navigate = useNavigate(); // ✅ for back navigation
+  const [activeTab, setActiveTab] = useState('profile');
+
+  // Billing tab removed from tabs array
+  const tabs = [
+    { id: 'profile', label: 'Profile', icon: ProfileIcon },
+    { id: 'sender', label: 'Sender Identity', icon: SenderIcon },
+    { id: 'team', label: 'Team Members', icon: TeamIcon },
+    { id: 'notifications', label: 'Notifications', icon: NotificationIcon },
+    { id: 'integrations', label: 'Integrations', icon: IntegrationIcon },
+  ];
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'profile':
+        return <ProfileTab />;
+      case 'sender':
+        return <SenderIdentityTab />;
+      case 'team':
+        return <TeamMembersTab />;
+      case 'notifications':
+        return <NotificationsTab />;
+      case 'integrations':
+        return <IntegrationsTab />;
+      // Billing case removed
+      default:
+        return <ProfileTab />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] px-2 pt-1 pb-4">
+      <div className="max-w-[1200px] mx-auto">
+        {/* Header Section with Back Arrow */}
+        <div className="flex items-center gap-3 mb-6">
+          {/* Back Arrow Button */}
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="group flex items-center justify-center w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md"
+            aria-label="Back to Dashboard"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5 transition-transform group-hover:-translate-x-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <div>
+            <h1 className="text-2xl font-bold text-[#0F172A] tracking-tight font-['Plus_Jakarta_Sans']">
+              Settings
+            </h1>
+            <p className="text-sm text-[#64748B] mt-1">
+              Manage your profile, workspace configuration, sender identities, team, and integrations
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Sidebar Navigation */}
+          <div className="w-full lg:w-[240px] shrink-0">
+            <div className="bg-white rounded-xl border border-[#E2E8F0] overflow-hidden">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-150",
+                      "border-b border-[#F1F5F9] last:border-b-0",
+                      isActive
+                        ? "bg-[#EEF2FF] text-[#4F46E5] border-l-4 border-l-[#4F46E5]"
+                        : "text-[#475569] hover:bg-slate-50 border-l-4 border-l-transparent"
+                    )}
+                  >
+                    <div className="flex shrink-0 items-center justify-center w-5">
+                      <Icon />
+                    </div>
+                    <span className={cn(
+                      "text-sm font-medium",
+                      isActive ? "text-[#4F46E5]" : "text-[#475569]"
+                    )}>
+                      {tab.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Content Area */}
+          <div className="flex-1 min-w-0">
+            {renderContent()}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
