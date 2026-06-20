@@ -69,7 +69,7 @@
 // //   const refreshData = async () => {
 // //     try {
 // //       setLoading(true);
-// //       const res = await fetch("http://127.0.0.1:8000/api/messagelog/");
+// //       const res = await fetch("https://wynreach-backend.onrender.com/api/messagelog/");
 // //       const data = await res.json();
 
 // //       if (data.success) {
@@ -628,7 +628,7 @@
 
 //       // Fetch both APIs in parallel
 //       const [logsRes, inboxRes] = await Promise.all([
-//         fetch("http://127.0.0.1:8000/api/messagelog/"),
+//         fetch("https://wynreach-backend.onrender.com/api/messagelog/"),
 //       ]);
 
 //       const logsData = await logsRes.json();
@@ -1227,7 +1227,7 @@ export default function WhatsAppLogs() {
   const refreshData = async () => {
     try {
       setLoading(true);
-      const logsRes = await fetch("http://127.0.0.1:8000/api/messagelog/");
+      const logsRes = await fetch("https://wynreach-backend.onrender.com/api/messagelog/");
       const logsData = await logsRes.json();
 
       let outgoing = [];

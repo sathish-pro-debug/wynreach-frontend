@@ -1,4 +1,4 @@
-// const API_BASE_URL = 'http://127.0.0.1:8000/api/campaigns';
+// const API_BASE_URL = 'https://wynreach-backend.onrender.com/api/campaigns';
 
 // export async function getAllCampaigns() {
 
@@ -41,7 +41,7 @@
 
 import { apiClient } from './client';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/campaigns/';
+const API_BASE_URL = 'https://wynreach-backend.onrender.com/api/campaigns/';
 
 export async function getAllCampaigns() {
 
